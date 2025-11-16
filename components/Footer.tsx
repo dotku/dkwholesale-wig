@@ -102,6 +102,11 @@ export default function Footer() {
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
+                <Link href="/track-order" className="text-sm hover:text-white">
+                  Track Order
+                </Link>
+              </li>
+              <li>
                 <Link href="/shipping" className="text-sm hover:text-white">
                   Shipping Info
                 </Link>

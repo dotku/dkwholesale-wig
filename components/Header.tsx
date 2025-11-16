@@ -55,6 +55,12 @@ export default function Header() {
             >
               Wholesale Info
             </Link>
+            <Link
+              href="/track-order"
+              className="text-sm font-medium text-gray-700 hover:text-purple-600"
+            >
+              Track Order
+            </Link>
           </div>
 
           {/* Cart and CTA */}
@@ -159,6 +165,13 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Wholesale Info
+              </Link>
+              <Link
+                href="/track-order"
+                className="text-sm font-medium text-gray-700 hover:text-purple-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Track Order
               </Link>
               <Link
                 href="/contact"
