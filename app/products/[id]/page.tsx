@@ -6,14 +6,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getProductById } from '@/lib/products';
 import { calculatePrice, priceTiers } from '@/lib/products';
+import { useCart } from '@/contexts/CartContext';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
   const product = getProductById(params.id as string);
+  const { addToCart } = useCart();
 
   const [quantity, setQuantity] = useState(product?.minOrderQuantity || 1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [isAdding, setIsAdding] = useState(false);
 
   if (!product) {
     return (
@@ -250,10 +253,23 @@ export default function ProductDetailPage() {
               </div>
 
               <button
-                className="mt-6 w-full rounded-full bg-purple-600 px-8 py-3 text-base font-semibold text-white hover:bg-purple-700"
-                onClick={() => alert('Cart functionality coming soon!')}
+                className="mt-6 w-full rounded-full bg-purple-600 px-8 py-3 text-base font-semibold text-white hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                disabled={isAdding}
+                onClick={() => {
+                  setIsAdding(true);
+                  addToCart(product, quantity);
+
+                  // Show success feedback
+                  setTimeout(() => {
+                    setIsAdding(false);
+                    const userConfirmed = confirm('Product added to cart! Would you like to view your cart?');
+                    if (userConfirmed) {
+                      router.push('/cart');
+                    }
+                  }, 300);
+                }}
               >
-                Add to Cart
+                {isAdding ? 'Adding to Cart...' : 'Add to Cart'}
               </button>
 
               <Link
